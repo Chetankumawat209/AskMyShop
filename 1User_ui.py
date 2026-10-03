@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from app import chatWithLLM
+from llm import chatWithLLM
 
 st.header("Business Agent")
 
@@ -9,9 +9,6 @@ SHOW_HINT = os.getenv("SHOW_SILENT_HINT", "0") == "1"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
-# if "llm_history" not in st.session_state:
-#     st.session_state.llm_history = []
 
 for m in st.session_state.messages:
     with st.chat_message(m["role"]):
@@ -26,7 +23,14 @@ if user_input:
     
 
     if reply is None: 
-        # st.write("not model response")  # not business related -> show NOTHING, save nothing
+         # not business related -> show NOTHING, save nothing
+
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        st.session_state.messages.append({"role": "assistant", "content": reply})
+        with st.chat_message("assistant"):
+            st.write()     # not model response
+
+
         if SHOW_HINT:
             st.caption("(dev) bot stayed silent: not a business message")
     else:
