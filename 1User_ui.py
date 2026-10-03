@@ -1,37 +1,36 @@
+import os
 import streamlit as st
+from app import chatWithLLM
 
-st.header("Business Agent", text_alignment="center")
+st.header("Business Agent")
 
-if 'messages' not in st.session_state:
-    st.session_state.messages=[]
+# set SHOW_SILENT_HINT=1 in .env while developing to SEE when the bot stayed silent
+SHOW_HINT = os.getenv("SHOW_SILENT_HINT", "0") == "1"
 
-for message in st.session_state.messages:
-    with st.chat_message(message['role']):
-        st.write(message['content'])
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
+# if "llm_history" not in st.session_state:
+#     st.session_state.llm_history = []
 
-# for business query only
+for m in st.session_state.messages:
+    with st.chat_message(m["role"]):
+        st.write(m["content"])
 
-user_input=st.chat_input("Message....")
-
-# need to understand massage intent first and give response
+user_input = st.chat_input("Ask about products, price, stock ...")
 
 if user_input:
-    
-    st.session_state.messages.append({
-        'role':"user",
-        'content':user_input
-    })
-
     with st.chat_message("user"):
         st.write(user_input)
+    reply = chatWithLLM(user_input, history=st.session_state.messages)
+    
 
-    response="add lllm here" ## need to add llm
-
-    st.session_state.messages.append({
-            'role':'assistant',
-            'content':response
-    })
-
-    with st.chat_message("assistent"):
-        st.write(response)
+    if reply is None: 
+        # st.write("not model response")  # not business related -> show NOTHING, save nothing
+        if SHOW_HINT:
+            st.caption("(dev) bot stayed silent: not a business message")
+    else:
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        st.session_state.messages.append({"role": "assistant", "content": reply})
+        with st.chat_message("assistant"):
+            st.write(reply)
