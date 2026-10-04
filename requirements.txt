@@ -1,6 +1,5 @@
-python
-steamlit
+streamlit
+supabase
 langchain
 python-dotenv
 langchain-google-genai
-langchain-huggingface
