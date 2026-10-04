@@ -1,7 +1,6 @@
+python
 steamlit
 langchain
 python-dotenv
 langchain-google-genai
 langchain-huggingface
-#  transformers
-#  huggingface_h
