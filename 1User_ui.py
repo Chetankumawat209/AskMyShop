@@ -23,12 +23,12 @@ if user_input:
     
 
     if reply is None: 
-         # not business related -> show NOTHING, save nothing
+        #  # not business related -> show NOTHING, save nothing
 
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        st.session_state.messages.append({"role": "assistant", "content": reply})
-        with st.chat_message("assistant"):
-            st.write()     # not model response
+        # st.session_state.messages.append({"role": "user", "content": user_input})
+        # st.session_state.messages.append({"role": "assistant", "content": reply})
+        # with st.chat_message("assistant"):
+        #     st.write()     # not model response
 
 
         if SHOW_HINT:
