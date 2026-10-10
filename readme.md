@@ -6,7 +6,9 @@ This is the first version (V1) of the project, built as a web-based AI assistant
 
 🚀 Live Project
 
-Live Demo: https://askmyshop.streamlit.app/
+This app is under maintenance.
+
+Live Demo: https://askmyshop-ednfyihrykrh9cyx7sfraj.streamlit.app/
 
 ✨ Features
 
